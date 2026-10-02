@@ -1,0 +1,7 @@
+# MenuNori gimbap favicon
+
+Created with the built-in image generation tool on 2026-10-02. Source: `gimbap-icon-source.png`. A new food symbol replaces the previous Korean-letter monogram. Browser icons are downscaled from this source, with no semantic edits.
+
+## Final generation prompt
+
+Use case: logo-brand. Asset type: a finished square website favicon for MenuNori, a Korean restaurant ordering practice game for travelers. Create one bold, polished, minimal flat graphic of a single Korean gimbap cross-section viewed directly from above. It must look appetizing and distinct at 16 by 16 pixels. Warm solid butter-yellow background covering the full square, a large nearly circular dark charcoal seaweed outer ring occupying about 80% of the canvas, a simple thick ivory rice ring inside it, and exactly three generous simple filling areas: golden yellow egg, orange carrot, fresh green cucumber. Tight strong composition and clear visual hierarchy; use very few large shapes. The silhouette and filling shapes should have a slightly friendly organic quality, like an expertly designed food app brand mark. Crisp clean edges, flat solid colors, no rice-grain detail, no shadows, no gradients, no perspective, no 3D, no photorealism. No lettering, no monograms, no face, no plate, no utensils, no extra objects, no watermarks. Do not draw a sushi nigiri or salmon sushi: specifically one round Korean gimbap slice. Output one standalone square icon, not an icon grid or a UI mockup.
