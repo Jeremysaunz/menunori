@@ -26,6 +26,8 @@ GitHub `main`이 기존 Vercel `menunori` 프로젝트와 연결되어 있습니
 - 공통 페이지·정책·메타데이터 생성: `site_pages.py`
 - 공개 도메인·운영자·문의 이메일: `site-config.json`
 
+운영자가 제공한 AdSense 계정은 `site-config.json`의 `adsenseAccount`에 저장합니다. 생성기는 소유권 확인 메타 태그만 HTML head에 넣으며, 광고 스크립트는 실행하지 않습니다.
+
 ```sh
 python3 generate-pages.py
 node --check dist/assets/app.js

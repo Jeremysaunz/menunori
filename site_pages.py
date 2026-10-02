@@ -17,6 +17,10 @@ EMAIL = CONFIG.get('contactEmail')
 if EMAIL and not re.fullmatch(r'[^\s<>@]+@[^\s<>@]+\.[^\s<>@]+', EMAIL):
     raise ValueError('Invalid contact email')
 CORRECTIONS = CONFIG['correctionsUrl']
+ADSENSE_ACCOUNT = CONFIG.get('adsenseAccount')
+if ADSENSE_ACCOUNT and not re.fullmatch(r'ca-pub-\d{16}', ADSENSE_ACCOUNT):
+    raise ValueError('Invalid AdSense account identifier')
+ADSENSE_META = f'<meta name="google-adsense-account" content="{ADSENSE_ACCOUNT}">' if ADSENSE_ACCOUNT else ''
 FAVICON_LINKS = '<link rel="icon" href="/favicon.ico?v=3" sizes="16x16 32x32 48x48"><link rel="icon" type="image/png" sizes="32x32" href="/assets/favicon-32.png?v=3"><link rel="icon" type="image/png" sizes="192x192" href="/assets/favicon-192.png?v=3"><link rel="apple-touch-icon" sizes="180x180" href="/assets/apple-touch-icon.png?v=3"><meta name="theme-color" content="#b63b27">'
 HEADER = '''<a class="skip-link" href="#main-content">Skip to content</a><header class="header"><a class="brand" href="/" aria-label="MenuNori home"><span class="brandmark">메</span>Menu<span>Nori</span></a><nav aria-label="Main navigation"><a href="/">Practice</a><a href="/guides/">Travel guides</a><a href="/about/">About</a><a href="/contact/">Contact</a></nav></header>'''
 FOOTER = '''<footer><a class="brand" href="/">Menu<span>Nori</span></a><p>Free ordering practice for travelers to Korea.</p><div><a href="/about/">About</a><a href="/contact/">Contact</a><a href="/editorial/">Content policy</a><a href="/privacy/">Privacy</a><a href="/terms/">Terms</a></div><small>© 2026 MenuNori · By Jeremy (제레미) · Fictional menus, real practice.</small></footer>'''
@@ -113,7 +117,8 @@ def build_pages(original_guides):
         home=home.replace('</main>',learning+'</main>',1)
     home=re.sub(r'<link rel="(?:icon|apple-touch-icon)"[^>]*>','',home)
     home=re.sub(r'<meta name="theme-color"[^>]*>','',home)
-    home=home.replace('</head>',FAVICON_LINKS+'</head>',1)
+    home=re.sub(r'<meta name="google-adsense-account"[^>]*>','',home)
+    home=home.replace('</head>',FAVICON_LINKS+ADSENSE_META+'</head>',1)
     index.write_text(home)
     # Apply the same icon set to every generated route, including the error page.
     for path in ROOT.rglob('*.html'):
@@ -122,5 +127,6 @@ def build_pages(original_guides):
         doc=path.read_text()
         doc=re.sub(r'<link rel="(?:icon|apple-touch-icon)"[^>]*>','',doc)
         doc=re.sub(r'<meta name="theme-color"[^>]*>','',doc)
-        path.write_text(doc.replace('</head>',FAVICON_LINKS+'</head>',1))
+        doc=re.sub(r'<meta name="google-adsense-account"[^>]*>','',doc)
+        path.write_text(doc.replace('</head>',FAVICON_LINKS+ADSENSE_META+'</head>',1))
     print(f'Generated {len(guides)} guides and {len(routes)} public routes for {ORIGIN}')
