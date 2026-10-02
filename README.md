@@ -41,3 +41,5 @@ python3 -m http.server 4173 --bind 127.0.0.1 --directory dist
 AdSense 계정 연결과 심사 준비 상태는 `LAUNCH.md`를 확인하세요.
 
 Search Console 소유권 확인 토큰은 `site-config.json`의 `googleSiteVerification`에 저장합니다. 생성기가 모든 HTML head에 중복 없이 적용하며, 확인 후에도 제거하지 않습니다. 검색 기준 주소와 사이트맵은 `https://menunori.com`입니다.
+
+영어 검색어별 페이지 역할, 사이트맵 제출 및 Search Console 점검 방법은 `SEO.md`에 정리했습니다. 검색량·실제 순위·색인 완료는 사이트 수정만으로 확인되지 않습니다.
