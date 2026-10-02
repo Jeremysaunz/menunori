@@ -27,3 +27,5 @@ python3 -m http.server 4173 --bind 127.0.0.1 --directory dist
 현재 canonical과 sitemap 기준 주소는 `.openai/hosting.json`의 프로젝트에 연결된 Sites 주소입니다. 도메인 변경 시 생성기의 `origin`과 홈 canonical도 함께 갱신하세요.
 
 애드센스 관련 남은 사항은 `LAUNCH.md`를 확인하세요.
+
+현재 첫 화면은 노리 분식 메뉴판과 영수증으로 구성됩니다. 담은 메뉴에 수량을 표시하고, 모바일에서는 주문이 있으면 하단 금액·주문 확인 버튼을 제공합니다. 동작 줄이기 설정에서는 등장·수량 애니메이션을 끕니다.
