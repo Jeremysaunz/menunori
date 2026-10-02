@@ -1,0 +1,3 @@
+User-agent: *
+Allow: /
+Sitemap: https://menunori.actslim.chatgpt.site/sitemap.xml
