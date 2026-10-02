@@ -1,3 +1,4 @@
 User-agent: *
 Allow: /
-Sitemap: https://menunori.actslim.chatgpt.site/sitemap.xml
+
+Sitemap: https://menunori.vercel.app/sitemap.xml

@@ -1,31 +1,39 @@
 # MenuNori
 
-제레미가 운영하는 한국 식당 주문 연습 서비스의 첫 버전입니다.
+제레미가 운영하는, 영어권 한국 여행자를 위한 메뉴 읽기·주문 연습 사이트입니다.
 
-- 분식집 1곳, 메뉴 6개, 미션 5개
-- 외국인 여행자를 위한 영어 UI와 한국어 메뉴·주문 표현, 포장·매장, 수량, 맵기, 치즈 추가
-- 장바구니 수정, 총액 확인, 오답 피드백, 다음 미션
-- 원본 여행 가이드 5편과 소개·개인정보·이용 안내
-- 실제 결제, 계정, 음성 수집, 광고·분석 스크립트 없음
+- 가상의 분식집: 메뉴 6개, 미션 5개, 매장·포장, 수량·맵기·추가 옵션, 주문표 확인
+- 영어 해설 가이드 7편: 원본 메뉴 예제, 계산, 실수 찾기, 짧은 표현, 해당 미션 연결
+- 소개, 문의·정정, 콘텐츠 제작 기준, 개인정보, 이용 안내
+- 실제 결제·계정·음성 업로드·광고·분석 스크립트 없음
 
-`dist/`가 바로 배포 가능한 정적 웹사이트입니다. 별도의 패키지 설치나 빌드는 필요 없습니다.
+## 배포
 
-## 로컬 확인
+GitHub `main`이 기존 Vercel `menunori` 프로젝트와 연결되어 있습니다.
+공개 기준 주소: https://menunori.vercel.app
+
+`vercel.json`은 정적 산출물 `dist/`를 배포합니다. 설치·빌드 단계가 필요 없습니다. 실제 없는 경로는 404여야 하므로 모든 경로를 홈으로 돌리는 SPA rewrite는 사용하지 않습니다.
+
+`.openai/hosting.json`은 이전 Sites 확인본의 식별 정보입니다. Vercel 배포에 사용하지 않으며, 이전 비공개 확인본을 AdSense 신청 주소로 사용하지 않습니다.
+
+## 수정과 생성
+
+- 홈: `dist/index.html`
+- 주문 게임: `dist/assets/app.js`
+- 스타일: `dist/assets/style.css`
+- 기존 가이드: `generate-pages.py`
+- 보강 예제·추가 가이드: `guide_content.py`
+- 공통 페이지·정책·메타데이터 생성: `site_pages.py`
+- 공개 도메인·운영자·문의 이메일: `site-config.json`
 
 ```sh
+python3 generate-pages.py
+node --check dist/assets/app.js
 python3 -m http.server 4173 --bind 127.0.0.1 --directory dist
 ```
 
-브라우저에서 http://127.0.0.1:4173 를 엽니다.
+`site-config.json`의 `contactEmail`은 운영자가 공개를 지정한 이메일만 넣습니다. 현재 null이며 작동하는 GitHub issue 경로를 제공하고 있습니다. 도메인을 변경하면 `origin`을 바꾸고 생성 후 홈 canonical 및 메타데이터도 확인합니다. 생성한 `dist/`도 함께 커밋해야 합니다.
 
-## 수정 위치
+음식 사진은 자체 AI 생성 자산이며 실제 식당의 메뉴·가격·레시피를 나타내지 않습니다. 독립 원어민 검수를 완료했다고 주장하지 않습니다.
 
-게임 화면 `dist/index.html`, 주문 기능·안내 `dist/assets/app.js`, 디자인 `dist/assets/style.css`.
-해설과 안내 페이지는 `generate-pages.py`에서 수정한 후 `python3 generate-pages.py`를 실행합니다.
-메뉴 사진은 자체 AI 생성 자산이며 실제 식당 사진이 아닙니다. 소셜 미리보기 이미지와 혼용하지 않습니다.
-
-현재 canonical과 sitemap 기준 주소는 `.openai/hosting.json`의 프로젝트에 연결된 Sites 주소입니다. 도메인 변경 시 생성기의 `origin`과 홈 canonical도 함께 갱신하세요.
-
-애드센스 관련 남은 사항은 `LAUNCH.md`를 확인하세요.
-
-현재 첫 화면은 노리 분식 메뉴판과 영수증으로 구성됩니다. 담은 메뉴에 수량을 표시하고, 모바일에서는 주문이 있으면 하단 금액·주문 확인 버튼을 제공합니다. 동작 줄이기 설정에서는 등장·수량 애니메이션을 끕니다.
+AdSense 계정 연결과 심사 준비 상태는 `LAUNCH.md`를 확인하세요.
