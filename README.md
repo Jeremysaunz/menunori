@@ -10,7 +10,7 @@
 ## 배포
 
 GitHub `main`이 기존 Vercel `menunori` 프로젝트와 연결되어 있습니다.
-공개 기준 주소: https://menunori.vercel.app
+공개 기준 주소: https://menunori.com
 
 `vercel.json`은 정적 산출물 `dist/`를 배포합니다. 설치·빌드 단계가 필요 없습니다. 실제 없는 경로는 404여야 하므로 모든 경로를 홈으로 돌리는 SPA rewrite는 사용하지 않습니다.
 
@@ -24,7 +24,7 @@ GitHub `main`이 기존 Vercel `menunori` 프로젝트와 연결되어 있습니
 - 기존 가이드: `generate-pages.py`
 - 보강 예제·추가 가이드: `guide_content.py`
 - 공통 페이지·정책·메타데이터 생성: `site_pages.py`
-- 공개 도메인·운영자·문의 이메일: `site-config.json`
+- 공개 도메인·운영자·문의 이메일·Google 확인 태그: `site-config.json`
 
 운영자가 제공한 AdSense 계정은 `site-config.json`의 `adsenseAccount`에 저장합니다. 생성기는 소유권 확인 메타 태그만 HTML head에 넣으며, 광고 스크립트는 실행하지 않습니다.
 
@@ -39,3 +39,5 @@ python3 -m http.server 4173 --bind 127.0.0.1 --directory dist
 음식 사진은 자체 AI 생성 자산이며 실제 식당의 메뉴·가격·레시피를 나타내지 않습니다. 독립 원어민 검수를 완료했다고 주장하지 않습니다.
 
 AdSense 계정 연결과 심사 준비 상태는 `LAUNCH.md`를 확인하세요.
+
+Search Console 소유권 확인 토큰은 `site-config.json`의 `googleSiteVerification`에 저장합니다. 생성기가 모든 HTML head에 중복 없이 적용하며, 확인 후에도 제거하지 않습니다. 검색 기준 주소와 사이트맵은 `https://menunori.com`입니다.
