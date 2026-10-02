@@ -17,6 +17,7 @@ EMAIL = CONFIG.get('contactEmail')
 if EMAIL and not re.fullmatch(r'[^\s<>@]+@[^\s<>@]+\.[^\s<>@]+', EMAIL):
     raise ValueError('Invalid contact email')
 CORRECTIONS = CONFIG['correctionsUrl']
+FAVICON_LINKS = '<link rel="icon" href="/favicon.ico?v=2" sizes="16x16 32x32 48x48"><link rel="icon" type="image/png" sizes="32x32" href="/assets/favicon-32.png?v=2"><link rel="icon" type="image/svg+xml" sizes="any" href="/assets/favicon.svg?v=2"><link rel="apple-touch-icon" sizes="180x180" href="/assets/apple-touch-icon.png?v=2"><meta name="theme-color" content="#b63b27">'
 HEADER = '''<a class="skip-link" href="#main-content">Skip to content</a><header class="header"><a class="brand" href="/" aria-label="MenuNori home"><span class="brandmark">메</span>Menu<span>Nori</span></a><nav aria-label="Main navigation"><a href="/">Practice</a><a href="/guides/">Travel guides</a><a href="/about/">About</a><a href="/contact/">Contact</a></nav></header>'''
 FOOTER = '''<footer><a class="brand" href="/">Menu<span>Nori</span></a><p>Free ordering practice for travelers to Korea.</p><div><a href="/about/">About</a><a href="/contact/">Contact</a><a href="/editorial/">Content policy</a><a href="/privacy/">Privacy</a><a href="/terms/">Terms</a></div><small>© 2026 MenuNori · By Jeremy (제레미) · Fictional menus, real practice.</small></footer>'''
 CONTACT = (f'<p>Email Jeremy: <a href="mailto:{escape(EMAIL, quote=True)}">{escape(EMAIL)}</a>.</p>' if EMAIL else '') + f'<p>Report a site problem or suggest a correction through <a href="{escape(CORRECTIONS, quote=True)}" target="_blank" rel="noopener">MenuNori’s public GitHub issue tracker</a>. A GitHub account is needed to submit an issue. Reports are public; do not include private information.</p>'
@@ -110,5 +111,16 @@ def build_pages(original_guides):
     if 'id="home-learning"' not in home:
         learning='''<section class="home-learning" id="home-learning" aria-labelledby="learning-title"><div><p class="eyebrow">WHAT YOU’RE PRACTICING</p><h2 id="learning-title">Five orders. Five useful habits.</h2><p>Start with the first mission or choose a situation you want to rehearse. Your receipt is the place to check your work.</p></div><ol><li><strong>Takeaway:</strong> one gimbap and one dumpling portion. Notice <span lang="ko">포장</span> before confirming.</li><li><strong>Mild + cheese:</strong> open the options on tteokbokki. Read the difference between an extra and a separate dish.</li><li><strong>For two:</strong> two noodle portions and one dumpling portion. Check the quantities and the ₩12,000 ceiling.</li><li><strong>Fix the basket:</strong> remove the wrong item. Adding the correct food does not remove a mistake.</li><li><strong>On your own:</strong> choose two non-spicy dishes without extras and finish under ₩9,000.</li></ol><p class="learning-link"><a href="/guides/quantity-and-prices/">Read portions and prices</a><a href="/guides/restaurant-ordering-phrases/">Try a short ordering phrase</a></p></section><section class="home-faq" aria-labelledby="faq-title"><h2 id="faq-title">Before you practice</h2><details><summary>Will this place a real order?</summary><p>No. The menu and restaurant are fictional, and the confirmation makes no payment. No card details are requested.</p></details><details><summary>Do I need to know Korean first?</summary><p>No. Instructions are in English, with Korean where you would see it on a menu. Use the guides to learn a few useful words as you go.</p></details><details><summary>Can I use these prices and recipes on my trip?</summary><p>Use the current restaurant menu for actual prices and ingredients. Our examples teach a decision process, and mild does not mean spice-free or allergen-free.</p></details><details><summary>What if I make a mistake?</summary><p>Review the feedback and keep editing your order. You can retry any mission. Only completed mission numbers are saved in this browser; <a href="/privacy/">clear them here</a>.</p></details></section>'''
         home=home.replace('</main>',learning+'</main>',1)
+    home=re.sub(r'<link rel="(?:icon|apple-touch-icon)"[^>]*>','',home)
+    home=re.sub(r'<meta name="theme-color"[^>]*>','',home)
+    home=home.replace('</head>',FAVICON_LINKS+'</head>',1)
     index.write_text(home)
+    # Apply the same icon set to every generated route, including the error page.
+    for path in ROOT.rglob('*.html'):
+        if path==index:
+            continue
+        doc=path.read_text()
+        doc=re.sub(r'<link rel="(?:icon|apple-touch-icon)"[^>]*>','',doc)
+        doc=re.sub(r'<meta name="theme-color"[^>]*>','',doc)
+        path.write_text(doc.replace('</head>',FAVICON_LINKS+'</head>',1))
     print(f'Generated {len(guides)} guides and {len(routes)} public routes for {ORIGIN}')
